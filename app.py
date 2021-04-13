@@ -5,27 +5,28 @@ from dataProcessing import *
 from Threads import *
 from flask import send_file
 import time
+import os
 script = ''
-  
 
 UPLOAD_FOLDER = '.'
 ALLOWED_EXTENSIONS = set(['txt'])
 
+# api = API(app)
 app = Flask(__name__)
-app.config["CACHE_TYPE"] = "null"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config["CACHE_TYPE"] = "null"
 
 def resultE():
-  path = "./Segments"
-  dir_list = os.listdir(path)
-  print(dir_list)
-  return render_template('Result.html')
+    path = "./Segments"
+    dir_list = os.listdir(path)
+    print(dir_list)
+    return render_template('Result.html',dir_list = dir_list)
 
 def resultD():
-  return render_template('resultD.html')
+    return render_template('resultD.html')
 
 @app.route('/encrypt/')
-def EncryptInput(): 
+def EncryptInput():
   Segment()
   gatherInfo()
   HybridCrypt()
@@ -33,17 +34,15 @@ def EncryptInput():
 
 @app.route('/decrypt/')
 def DecryptMessage():
-  dec = []
-  #st=time.time()
+  st=time.time()
   HybridDeCrypt()
-  #et=time.time()
-  #print(et-st)
+  et=time.time()
+  print(et-st)
   trim()
-  #st=time.time()
-  dec = Merge()
-  print("Dec files are ",dec)
-  # et=time.time()
-  #print(et-st)
+  st=time.time()
+  Merge()
+  et=time.time()
+  print(et-st)
   return resultD()
 
 def start():

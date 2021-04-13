@@ -2,84 +2,110 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.backends import default_backend
 from cryptography.fernet import Fernet
 import os
-
-
-def DAES(key,iv):
-    f=open(os.path.join(os.getcwd()+"/Segments","0.txt"),"rb")
+def AES(key,iv):
+    f=open(os.path.join(os.getcwd()+"/Segments","0.txt"),"r")
     content=f.read()
     f.close()
+    content=content.encode()
+    b=len(content)
+    if(b%16!=0):
+        while(b%16!=0):
+            content+=" ".encode()
+            b=len(content)
     backend = default_backend()
     cipher = Cipher(algorithms.AES(key), modes.CBC(iv), backend=backend)
-    decryptor = cipher.decryptor()
-    content=decryptor.update(content) + decryptor.finalize()
+    encryptor = cipher.encryptor()
+    cont = encryptor.update(content) + encryptor.finalize()
+    open(os.path.join(os.getcwd()+"/Segments","0.txt"),"wb").close()
     f=open(os.path.join(os.getcwd()+"/Segments","0.txt"),"wb")
-    f.write(content)
-    f.close()
-    
-def DBlowFish(key,iv):
-    f=open(os.path.join(os.getcwd()+"/Segments","1.txt"),"rb")
+    f.write(cont)
+    f.close();
+
+def BlowFish(key,iv):
+    f=open(os.path.join(os.getcwd()+"/Segments","1.txt"),"r")
     content=f.read()
     f.close()
+    content=content.encode()
+    b=len(content)
+    if(b%8!=0):
+        while(b%8!=0):
+            content+=" ".encode()
+            b=len(content)
     backend = default_backend()
     cipher = Cipher(algorithms.Blowfish(key), modes.CBC(iv), backend=backend)
-    decryptor = cipher.decryptor()
-    content=decryptor.update(content) + decryptor.finalize()
+    encryptor = cipher.encryptor()
+    cont = encryptor.update(content) + encryptor.finalize()
+    open(os.path.join(os.getcwd()+"/Segments","1.txt"),"w").close()
     f=open(os.path.join(os.getcwd()+"/Segments","1.txt"),"wb")
-    f.write(content)
-    f.close()
+    f.write(cont);
+    f.close();
 
-def DTrippleDES(key,iv):
-    f=open(os.path.join(os.getcwd()+"/Segments","2.txt"),"rb")
-    content=f.read()
-    f.close()
-    backend = default_backend()
-    cipher = Cipher(algorithms.TripleDES(key), modes.CBC(iv), backend=backend)
-    decryptor = cipher.decryptor()
-    content=decryptor.update(content) + decryptor.finalize()
-    f=open(os.path.join(os.getcwd()+"/Segments","2.txt"),"wb")
-    f.write(content)
-    f.close()
-    
-def DIDEA(key,iv):
-    f=open(os.path.join(os.getcwd()+"/Segments","3.txt"),"rb")
-    content=f.read()
-    f.close()
-    backend = default_backend()
-    cipher = Cipher(algorithms.IDEA(key), modes.CBC(iv), backend=backend)
-    decryptor = cipher.decryptor()
-    content=decryptor.update(content) + decryptor.finalize()
-    open(os.path.join(os.getcwd()+"/Segments","3.txt"),"wb").close()
-    f=open(os.path.join(os.getcwd()+"/Segments","3.txt"),"wb")
-    f.write(content)
-    f.close()
-    
-def DFernet(key):
-	f=open(os.path.join(os.getcwd()+"/Segments","4.txt"),"rb")
+
+def TrippleDES(key,iv):
+    f=open(os.path.join(os.getcwd()+"/Segments","2.txt"),"r");
+    content=f.read();
+    f.close();
+    content=content.encode()
+    b=len(content);
+    if(b%8!=0):
+        while(b%8!=0):
+            content+=" ".encode()
+            b=len(content);
+    backend = default_backend();
+    cipher = Cipher(algorithms.TripleDES(key), modes.CBC(iv), backend=backend);
+    encryptor = cipher.encryptor();
+    cont = encryptor.update(content) + encryptor.finalize();
+    open(os.path.join(os.getcwd()+"/Segments","2.txt"),"w").close();
+    f=open(os.path.join(os.getcwd()+"/Segments","2.txt"),"wb");
+    f.write(cont);
+    f.close();
+
+def IDEA(key,iv):
+	f=open(os.path.join(os.getcwd()+"/Segments","3.txt"),"r")
 	content=f.read()
 	f.close()
-	fer = Fernet(key)
-	content=fer.decrypt(content)
-	open(os.path.join(os.getcwd()+"/Segments","4.txt"),"w").close()
-	f=open(os.path.join(os.getcwd()+"/Segments","4.txt"),"wb")
-	f.write(content)
+	content=content.encode()
+	b=len(content)
+	if(b%8!=0):
+		while(b%8!=0):
+			content+=" ".encode()
+			b=len(content)
+	backend = default_backend()
+	cipher = Cipher(algorithms.IDEA(key), modes.CBC(iv), backend=backend)
+	encryptor = cipher.encryptor()
+	cont = encryptor.update(content) + encryptor.finalize()
+	open(os.path.join(os.getcwd()+"/Segments","3.txt"),"w").close()
+	f=open(os.path.join(os.getcwd()+"/Segments","3.txt"),"wb")
+	f.write(cont)
 	f.close()
 
-def HybridDeCryptKeys():
-    f=open('Original.txt','rb')
-    key=f.read()
+def EFernet(key):
+    f=open(os.path.join(os.getcwd()+"/Segments","4.txt"),"r")
+    content=f.read()
     f.close()
+    content=content.encode()
     fer = Fernet(key)
-    listDir=os.listdir(os.path.join(os.getcwd(),"Infos"))
+    content=fer.encrypt(content)
+    open(os.path.join(os.getcwd()+"/Segments","4.txt"),'w').close()
+    f=open(os.path.join(os.getcwd()+"/Segments","4.txt"),"wb")
+    f.write(content)
+    f.close()
+
+def HybridCryptKeys():
+    key = Fernet.generate_key()
+    f=open('Original.txt','wb')
+    f.write(key)
+    f.close()
+    listDir=os.listdir(os.getcwd()+"/Infos")
+    fer = Fernet(key)
     for i in listDir:
-        path=os.path.join(os.getcwd()+"/Infos",i)
-        print(path)
-        k=open(path,"rb")
-        content=k.read()
-        print(content)
-        k.close()
-        content=fer.decrypt(content)
-        open(os.path.join(os.getcwd()+"/Infos",i),"wb").close()
+        KI=open(os.getcwd()+'/Infos//'+i,'rb')
+        content=KI.read()
+        KI.close()
+        content=fer.encrypt(content)
+        open(os.path.join(os.getcwd()+"/Infos",i),'wb').close()
         f=open(os.path.join(os.getcwd()+"/Infos",i),"wb")
-        print(i)
         f.write(content)
         f.close()
+
+
