@@ -6,7 +6,7 @@ from Threads import *
 from flask import send_file
 import time
 script = ''
-
+  
 
 UPLOAD_FOLDER = '.'
 ALLOWED_EXTENSIONS = set(['txt'])
