@@ -16,13 +16,16 @@ app.config["CACHE_TYPE"] = "null"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def resultE():
-    return render_template('Result.html')
+  path = "./Segments"
+  dir_list = os.listdir(path)
+  print(dir_list)
+  return render_template('Result.html')
 
 def resultD():
-    return render_template('resultD.html')
+  return render_template('resultD.html')
 
 @app.route('/encrypt/')
-def EncryptInput():
+def EncryptInput(): 
   Segment()
   gatherInfo()
   HybridCrypt()
