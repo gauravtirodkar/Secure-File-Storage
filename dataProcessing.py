@@ -10,7 +10,8 @@ def Segment():
 	limit=int(count/5)
 	for i in range(0,5):
 		name=str(i)+".txt"
-		path=os.path.join(os.getcwd()+"\Segments",name)
+		# path=os.path.join(os.getcwd()+"\Segments",name)
+		path=os.path.join("Segments",name)
 		f=open(path,'w')
 		ctr=0
 		for j in range(k,count):
