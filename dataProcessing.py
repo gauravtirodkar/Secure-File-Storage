@@ -24,7 +24,8 @@ def Segment():
 	#os.remove('Original.txt')
 
 def gatherInfo():
-	path1="/Infos/Log.txt"
+	# path1="/Infos/Log.txt"
+	path1 = os.path.join("Infos","Log.txt")
 	path2="/Segments/"
 	mainFile=open(path1,'w')
 	lisDir=os.listdir(os.path.join("Segments"))
@@ -37,7 +38,8 @@ def gatherInfo():
 	mainFile.close()	
 
 def trim():
-	path1="/Infos/Log.txt"
+	# path1="/Infos/Log.txt"
+	path1 = os.path.join("Infos","Log.txt")
 	mainFile=open(path1,'r')
 	content=mainFile.read()
 	mainFile.close()
