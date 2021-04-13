@@ -24,12 +24,10 @@ def Segment():
 	#os.remove('Original.txt')
 
 def gatherInfo():
-	path1=os.getcwd()
-	path1=path1+"/Infos/Log.txt"
-	path2=os.getcwd()
-	path2=path2+"/Segments/"
+	path1="/Infos/Log.txt"
+	path2="/Segments/"
 	mainFile=open(path1,'w')
-	lisDir=os.listdir(os.path.join(os.getcwd()+"\Segments"))
+	lisDir=os.listdir(os.path.join("Segments"))
 	for i in lisDir:
 		f=open(path2+i,'r')
 		content=f.read()
@@ -39,14 +37,12 @@ def gatherInfo():
 	mainFile.close()	
 
 def trim():
-	path1=os.getcwd()
-	path1=path1+"/Infos/Log.txt"
+	path1="/Infos/Log.txt"
 	mainFile=open(path1,'r')
 	content=mainFile.read()
 	mainFile.close()
 	content=content.split('::::')
-	path2=os.getcwd()
-	path2=path2+"/Segments"
+	path2="/Segments"
 	lisDir=os.listdir(path2)
 	tData=""
 	c=0
@@ -71,7 +67,7 @@ def Merge():
 	mainFile=open("Output.txt","w")
 	dec = []
 	for i in range(0,5):
-		name=os.path.join(os.getcwd()+"\Segments",str(i)+".txt")
+		name=os.path.join("Segments",str(i)+".txt")
 		f=open(name,"r")
 		cont=f.read()
 		dec.append(cont)
