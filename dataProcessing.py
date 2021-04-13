@@ -26,11 +26,12 @@ def Segment():
 def gatherInfo():
 	# path1="/Infos/Log.txt"
 	path1 = os.path.join("Infos","Log.txt")
-	path2="/Segments/"
+	path2="Segments"
 	mainFile=open(path1,'w')
 	lisDir=os.listdir(os.path.join("Segments"))
 	for i in lisDir:
-		f=open(path2+i,'r')
+		path2 = os.path.join(path2,i)
+		f=open(path2,'r')
 		content=f.read()
 		mainFile.write(str(len(content)))
 		mainFile.write('::::')
@@ -44,13 +45,14 @@ def trim():
 	content=mainFile.read()
 	mainFile.close()
 	content=content.split('::::')
-	path2="/Segments"
+	path2="Segments"
 	lisDir=os.listdir(path2)
 	tData=""
 	c=0
 	i=0
 	for j in lisDir:
-		path3=path2+"/"+j
+		# path3=path2+"/"+j
+		path3 = os.path.join(path2,j)
 		f=open(path3,'r')
 		data=f.read()
 		f.close()
